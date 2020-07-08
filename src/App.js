@@ -2,24 +2,17 @@ import React, { Component } from "react";
 import NavBar from "./components/navbar";
 import Counters from "./components/counters";
 import "./App.css";
+import {connect} from 'react-redux';
+import {incremented} from './redux/actions';
 
 class App extends Component {
-  state = {
+  /*state = {
     counters: [
       { id: 1, value: 0 },
       { id: 2, value: 1 },
       { id: 3, value: 2 },
     ],
-  };
-
-  constructor() {
-    super();
-    console.log("App constructor");
-  }
-
-  componentDidMount() {
-    console.log("App mounted");
-  }
+  };*/
 
   handleDelete = (id) => {
     const counters = this.state.counters.filter((counter) => counter.id != id);
@@ -43,18 +36,18 @@ class App extends Component {
   };
 
   render() {
-    console.log("App rendered");
+    // console.log(this.props);
     return (
       <React.Fragment>
         <NavBar
-          totalCounters={this.state.counters.filter((c) => c.value > 0).length}
+          totalCounters={this.props.counters.filter((c) => c.value > 0).length}
         />
         <main className="container">
           <Counters
             onReset={this.handleReset}
-            onIncrement={this.handleIncrement}
+            onIncrement={this.props.incremented}
             onDelete={this.handleDelete}
-            counters={this.state.counters}
+            counters={this.props.counters}
           />
         </main>
       </React.Fragment>
@@ -62,4 +55,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state /*, ownProps*/) => {
+  // console.log(state.counters);
+  return {
+    counters: state.counters
+  }
+}
+
+const mapDispatchToProps = { incremented }
+
+export default connect(
+        mapStateToProps,
+        mapDispatchToProps
+)(App);

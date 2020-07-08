@@ -1,15 +1,7 @@
 import React, { Component } from "react";
 
+
 class Counter extends Component {
-  componentDidUpdate(prevProps) {
-    console.log("Component update");
-    console.log("prevProps", prevProps);
-  }
-
-  componentWillUnmount() {
-    console.log("Counter unmount");
-  }
-
   render() {
     console.log("Counter rendered");
     return (
@@ -43,5 +35,7 @@ class Counter extends Component {
     return count === 0 ? "Zero" : count;
   }
 }
+
+
 
 export default Counter;
